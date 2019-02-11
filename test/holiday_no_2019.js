@@ -15,13 +15,16 @@ describe("Norwegian holidays", function () {
         it("Check 01.01.2019", function () {
             expect(holidays.isHoliday('NO', new Date(2019, 0, 2), 'yesterday').type).to.equal('public');
         });
-        it("Check 18.04.2019 - easter", function () {
+        it("Check 10.02.2019", function () {
+            expect(holidays.isHoliday('NO', new Date(2019, 1, 10)).type).to.equal('observance');
+        });
+        it("Check 18.04.2019", function () {
             expect(holidays.isHoliday('NO', new Date(2019, 3, 18)).type).to.equal('public');
         });
-        it("Check 19.04.2019 - easter", function () {
+        it("Check 19.04.2019", function () {
             expect(holidays.isHoliday('NO', new Date(2019, 3, 19)).type).to.equal('public');
         });
-        it("Check 22.04.2019 - easter", function () {
+        it("Check 22.04.2019", function () {
             expect(holidays.isHoliday('NO', new Date(2019, 3, 22)).type).to.equal('public');
         });
         it("Check 01.05.2019", function () {
@@ -39,31 +42,31 @@ describe("Norwegian holidays", function () {
         it("Check 30.05.2019", function () {
             expect(holidays.isHoliday('NO', new Date(2019, 4, 30)).type).to.equal('public');
         });
-        it("Check 30.05.2019", function () {
+        it("Check 08.06.2019", function () {
             expect(holidays.isHoliday('NO', new Date(2019, 5, 8))).to.equal(false);
         });
-        it("Check 30.05.2019", function () {
+        it("Check 09.06.2019", function () {
             expect(holidays.isHoliday('NO', new Date(2019, 5, 9)).type).to.equal('public');
         });
-        it("Check 30.05.2019", function () {
+        it("Check 10.06.2019", function () {
             expect(holidays.isHoliday('NO', new Date(2019, 5, 10)).type).to.equal('public');
         });
-        it("Check 30.05.2019", function () {
+        it("Check 04.07.2019", function () {
             expect(holidays.isHoliday('NO', new Date(2019, 6, 4))).to.equal(false);
         });
-        it("Check 30.05.2019", function () {
+        it("Check 01.12.2019", function () {
             expect(holidays.isHoliday('NO', new Date(2019, 11, 1)).type).to.equal('observance');
         });
-        it("Check 30.05.2019", function () {
+        it("Check 24.12.2019", function () {
             expect(holidays.isHoliday('NO', new Date(2019, 11, 24)).type).to.equal('bank');
         });
-        it("Check 30.05.2019", function () {
+        it("Check 25.12.2019", function () {
             expect(holidays.isHoliday('NO', new Date(2019, 11, 25)).type).to.equal('public');
         });
-        it("Check 30.05.2019", function () {
+        it("Check 26.12.2019", function () {
             expect(holidays.isHoliday('NO', new Date(2019, 11, 26)).type).to.equal('public');
         });
-        it("Check 30.05.2019", function () {
+        it("Check 31.12.2019", function () {
             expect(holidays.isHoliday('NO', new Date(2019, 11, 31))).to.equal(false);
         });
     });
