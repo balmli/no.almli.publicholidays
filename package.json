@@ -1,0 +1,21 @@
+{
+  "name": "no.almli.holidays",
+  "version": "1.0.0",
+  "description": "Public holidays",
+  "main": "app.js",
+  "scripts": {
+    "pretest": "eslint --ignore-path .gitignore app.js lib test",
+    "test": "./node_modules/.bin/mocha --reporter spec",
+    "posttest": "athom app validate --level=publish"
+  },
+  "author": "Bjørnar Almli",
+  "license": "ISC",
+  "dependencies": {
+    "date-holidays": "^1.3.6"
+  },
+  "devDependencies": {
+    "eslint": "^5.12.1",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0"
+  }
+}
