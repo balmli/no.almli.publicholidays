@@ -1,4 +1,4 @@
-# Public and bank holidays
+# Public holidays
 
 App for public, bank and observance holidays.  Uses the [date-holidays](https://www.npmjs.com/package/date-holidays) NPM package.
 

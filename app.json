@@ -1,13 +1,13 @@
 {
-  "id": "no.almli.holidays",
+  "id": "no.almli.publicholidays",
   "version": "1.0.0",
   "compatibility": ">=2.0.0",
   "sdk": 2,
   "name": {
-    "en": "Holidays"
+    "en": "Public holidays"
   },
   "description": {
-    "en": "Holidays"
+    "en": "Public holidays"
   },
   "category": [
     "tools"
