@@ -8,6 +8,7 @@ App for public, bank and observance holidays.  Uses the [date-holidays](https://
 - Is bank holiday today / yesterday / tomorrow.
 - Is observance holiday today / yesterday / tomorrow.
 - Is holiday (public, bank or observance) today / yesterday / tomorrow.
+- Is working day today / yesterday / tomorrow.
 
 Bank holiday: banks and offices are closed.
 Observance holiday: optional festivity, no paid day off.
@@ -46,7 +47,7 @@ Photo by Sai Kiran Anagani on Unsplash
 
 ## Feedback:
 
-Please report issues at the [issues section on Github](https://github.com/balmli/no.almli.holidays/issues).
+Please report issues at the [issues section on Github](https://github.com/balmli/no.almli.publicholidays/issues).
 
 ### Release Notes:
 
