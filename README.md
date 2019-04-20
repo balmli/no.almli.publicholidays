@@ -40,6 +40,10 @@ The following countries are supported:
 - Switzerland
 - United Kingdom
 
+## Acknowledgements:
+
+Photo by Sai Kiran Anagani on Unsplash
+
 ## Feedback:
 
 Please report issues at the [issues section on Github](https://github.com/balmli/no.almli.holidays/issues).
