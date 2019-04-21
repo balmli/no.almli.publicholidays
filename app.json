@@ -167,12 +167,17 @@
                 }
               },
               {
+                "id": "RU",
+                "label": {
+                  "en": "Russia"
+                }
+              },
+              {
                 "id": "ES",
                 "label": {
                   "en": "Spain"
                 }
-              },
-              {
+              },{
                 "id": "SE",
                 "label": {
                   "en": "Sweden"
@@ -331,12 +336,17 @@
                 }
               },
               {
+                "id": "RU",
+                "label": {
+                  "en": "Russia"
+                }
+              },
+              {
                 "id": "ES",
                 "label": {
                   "en": "Spain"
                 }
-              },
-              {
+              },{
                 "id": "SE",
                 "label": {
                   "en": "Sweden"
@@ -495,12 +505,17 @@
                 }
               },
               {
+                "id": "RU",
+                "label": {
+                  "en": "Russia"
+                }
+              },
+              {
                 "id": "ES",
                 "label": {
                   "en": "Spain"
                 }
-              },
-              {
+              },{
                 "id": "SE",
                 "label": {
                   "en": "Sweden"
@@ -659,12 +674,17 @@
                 }
               },
               {
+                "id": "RU",
+                "label": {
+                  "en": "Russia"
+                }
+              },
+              {
                 "id": "ES",
                 "label": {
                   "en": "Spain"
                 }
-              },
-              {
+              },{
                 "id": "SE",
                 "label": {
                   "en": "Sweden"
@@ -820,6 +840,12 @@
                 "id": "PT",
                 "label": {
                   "en": "Portugal"
+                }
+              },
+              {
+                "id": "RU",
+                "label": {
+                  "en": "Russia"
                 }
               },
               {

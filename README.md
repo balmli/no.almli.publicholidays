@@ -1,6 +1,6 @@
 # Public holidays
 
-App for public, bank and observance holidays.  Uses the [date-holidays](https://www.npmjs.com/package/date-holidays) NPM package.
+App for public, bank and observance holidays for several countries.
 
 #### Conditions
 
@@ -36,6 +36,7 @@ The following countries are supported:
 - Norway
 - Poland
 - Portugal
+- Russia
 - Spain
 - Sweden
 - Switzerland
@@ -43,7 +44,9 @@ The following countries are supported:
 
 ## Acknowledgements:
 
-Photo by Sai Kiran Anagani on Unsplash
+The [date-holidays](https://www.npmjs.com/package/date-holidays) NPM package.
+
+Photo by Sai Kiran Anagani on Unsplash.
 
 ## Feedback:
 
