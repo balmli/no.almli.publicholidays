@@ -5,6 +5,7 @@ node_modules/*
 !node_modules/argparse
 !node_modules/astronomia
 !node_modules/caldate
+!node_modules/date-bengali-revised
 !node_modules/date-chinese
 !node_modules/date-easter
 !node_modules/date-holidays
