@@ -1,6 +1,6 @@
 {
   "name": "no.almli.publicholidays",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Public holidays",
   "main": "app.js",
   "scripts": {
@@ -11,7 +11,7 @@
   "author": "Bjørnar Almli",
   "license": "ISC",
   "dependencies": {
-    "date-holidays": "^1.3.6"
+    "date-holidays": "^1.4.0"
   },
   "devDependencies": {
     "eslint": "^5.12.1",
