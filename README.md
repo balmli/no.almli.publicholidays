@@ -54,6 +54,10 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 
 ### Release Notes:
 
+#### 1.0.4
+
+- Added Singapore
+
 #### 1.0.3
 
 - Reduced size 
