@@ -37,6 +37,7 @@ The following countries are supported:
 - Poland
 - Portugal
 - Russia
+- Singapore
 - Spain
 - Sweden
 - Switzerland
