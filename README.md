@@ -55,7 +55,7 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 
 ### Release Notes:
 
-#### 1.0.4
+#### 1.0.5
 
 - Added Singapore
 
