@@ -4,9 +4,11 @@ const Homey = require('homey');
 const holidays = require('./lib/holidays');
 const countries = require('./lib/countries');
 
+const CRONTASK = "no.almli.publicholidays.cron";
+
 class HolidaysApp extends Homey.App {
 
-    onInit() {
+    async onInit() {
         this.log('HolidaysApp is running...');
 
         this.addCondition('is_public_holiday', {'public': true});
@@ -25,6 +27,16 @@ class HolidaysApp extends Homey.App {
             })
             .getArgument('country')
             .registerAutocompleteListener((query, args) => this.onCountryAutocomplete(query, args));
+
+        this.tokenYesterday = new Homey.FlowToken('HolidayYesterday', {type: 'string', title: 'Holiday yesterday'})
+            .register();
+        this.tokenToday = new Homey.FlowToken('HolidayToday', {type: 'string', title: 'Holiday today'})
+            .register();
+        this.tokenTomorrow = new Homey.FlowToken('HolidayTomorrow', {type: 'string', title: 'Holiday tomorrow'})
+            .register();
+
+        await this.registerTask();
+        await this.onCronRun();
     }
 
     addCondition(condition, types) {
@@ -49,10 +61,59 @@ class HolidaysApp extends Homey.App {
         let hd;
         try {
             hd = holidays.isHoliday(args.country.id, new Date(), args.condition);
+            this.updateCountry(args.country.id);
         } catch (err) {
             console.error(err);
         }
         return hd && hd.type && hd.type in types;
+    }
+
+    updateCountry(countryId) {
+        Homey.ManagerSettings.set('country', countryId);
+    }
+
+    getCountry() {
+        return Homey.ManagerSettings.get('country');
+    }
+
+    async unregisterTask() {
+        try {
+            await Homey.ManagerCron.unregisterTask(CRONTASK);
+            this.log(`Unregistered task: ${CRONTASK}`);
+        } catch (err) {
+            this.log('Error unregistering task', err);
+        }
+    }
+
+    async registerTask() {
+        await this.unregisterTask();
+        try {
+            const cronTask = await Homey.ManagerCron.registerTask(CRONTASK, "0 0 * * *", {});
+            cronTask.on('run', () => {
+                this.onCronRun();
+            });
+            this.log(`Registered task: ${CRONTASK}`);
+        } catch (err) {
+            this.log('Error registering task', err);
+        }
+    }
+
+    async onCronRun() {
+        let countryId = this.getCountry();
+        if (!countryId) {
+            this.log('Country is not set yet.. so skip');
+            return;
+        }
+        const today = new Date();
+        await this.updateToken(countryId, today, 'yesterday', this.tokenYesterday);
+        await this.updateToken(countryId, today, 'today', this.tokenToday);
+        await this.updateToken(countryId, today, 'tomorrow', this.tokenTomorrow);
+        this.log(`Updated tokens for country: ${countryId}`);
+    }
+
+    async updateToken(countryId, date, condition, token) {
+        let hd = holidays.isHoliday(countryId, date, condition);
+        await token.setValue(hd ? hd.name : '');
     }
 
 }

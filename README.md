@@ -49,6 +49,16 @@ The following countries are supported:
 - Switzerland
 - United Kingdom
 
+#### Tokens
+
+Three tokens are set with the name of the holiday for yesterday, today and tomorrow:
+
+- HolidayYesterday
+- HolidayToday
+- HolidayTomorrow
+
+The country last used in a condition will be used for setting the tokens.
+
 ## Acknowledgements:
 
 The [date-holidays](https://www.npmjs.com/package/date-holidays) NPM package.
@@ -60,6 +70,10 @@ Photo by Sai Kiran Anagani on Unsplash.
 Please report issues at the [issues section on Github](https://github.com/balmli/no.almli.publicholidays/issues).
 
 ### Release Notes:
+
+#### 1.0.9
+
+- Added tokens for holidays: HolidayYesterday, HolidayToday, HolidayTomorrow
 
 #### 1.0.8
 

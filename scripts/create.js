@@ -18,8 +18,7 @@ countries.map(c => {
         date.setDate(date.getDate() + i);
         let ho = hd.isHoliday(date);
         if (ho) {
-            let type = ho.type === 'public' ? 'p' : ho.type === 'bank' ? 'b' : ho.type === 'observance' ? 'o' : ho.type;
-            console.log(`"${c.id}-${toJSONLocal(date)}": "${type}",`);
+            console.log(`"${c.id}-${toJSONLocal(date)}":{"type":"${ho.type}","name":"${ho.name}"},`);
         }
     }
 });
