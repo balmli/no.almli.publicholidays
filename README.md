@@ -20,11 +20,14 @@ The following countries are supported:
 - Australia
 - Austria
 - Belgium
+- Bulgaria
+- Czech Republic
 - Denmark
 - Estonia
 - Finland
 - France
 - Germany
+- Hungary
 - Iceland
 - Ireland
 - Italy
@@ -36,8 +39,11 @@ The following countries are supported:
 - Norway
 - Poland
 - Portugal
+- Romania
 - Russia
 - Singapore
+- Slovakia
+- Slovenia
 - Spain
 - Sweden
 - Switzerland
@@ -54,6 +60,10 @@ Photo by Sai Kiran Anagani on Unsplash.
 Please report issues at the [issues section on Github](https://github.com/balmli/no.almli.publicholidays/issues).
 
 ### Release Notes:
+
+#### 1.0.8
+
+- Added Bulgaria, Czech Republic, Hungary, Lichtenstein, Luxembourg, Romania, Slovakia, Slovenia
 
 #### 1.0.7
 
