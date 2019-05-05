@@ -6,6 +6,10 @@ const countries = require('./lib/countries');
 
 const CRONTASK = "no.almli.publicholidays.cron";
 
+const tokenYesterday = new Homey.FlowToken('HolidayYesterday', {type: 'string', title: 'Holiday yesterday'});
+const tokenToday = new Homey.FlowToken('HolidayToday', {type: 'string', title: 'Holiday today'});
+const tokenTomorrow = new Homey.FlowToken('HolidayTomorrow', {type: 'string', title: 'Holiday tomorrow'});
+
 class HolidaysApp extends Homey.App {
 
     async onInit() {
@@ -28,12 +32,9 @@ class HolidaysApp extends Homey.App {
             .getArgument('country')
             .registerAutocompleteListener((query, args) => this.onCountryAutocomplete(query, args));
 
-        this.tokenYesterday = new Homey.FlowToken('HolidayYesterday', {type: 'string', title: 'Holiday yesterday'})
-            .register();
-        this.tokenToday = new Homey.FlowToken('HolidayToday', {type: 'string', title: 'Holiday today'})
-            .register();
-        this.tokenTomorrow = new Homey.FlowToken('HolidayTomorrow', {type: 'string', title: 'Holiday tomorrow'})
-            .register();
+        await tokenYesterday.register();
+        await tokenToday.register();
+        await tokenTomorrow.register();
 
         await this.registerTask();
         await this.onCronRun();
@@ -68,8 +69,9 @@ class HolidaysApp extends Homey.App {
         return hd && hd.type && hd.type in types;
     }
 
-    updateCountry(countryId) {
+    async updateCountry(countryId) {
         Homey.ManagerSettings.set('country', countryId);
+        await this.onCronRun();
     }
 
     getCountry() {
@@ -105,9 +107,9 @@ class HolidaysApp extends Homey.App {
             return;
         }
         const today = new Date();
-        await this.updateToken(countryId, today, 'yesterday', this.tokenYesterday);
-        await this.updateToken(countryId, today, 'today', this.tokenToday);
-        await this.updateToken(countryId, today, 'tomorrow', this.tokenTomorrow);
+        await this.updateToken(countryId, today, 'yesterday', tokenYesterday);
+        await this.updateToken(countryId, today, 'today', tokenToday);
+        await this.updateToken(countryId, today, 'tomorrow', tokenTomorrow);
         this.log(`Updated tokens for country: ${countryId}`);
     }
 
