@@ -7,7 +7,8 @@ console.log(`'use strict';`);
 console.log('const holidays_list = {');
 countries.map(c => {
     let hd = new Holidays(c.id);
-    for (let year = 2019; year < 2022; year++) {
+    const startYear = new Date().getFullYear();
+    for (let year = startYear; year < startYear + 3; year++) {
         let dates = hd.getHolidays(year);
         if (dates) {
             const result = dates
