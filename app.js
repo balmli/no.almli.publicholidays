@@ -54,7 +54,7 @@ class HolidaysApp extends Homey.App {
         }));
     }
 
-    check(args, types) {
+    async check(args, types) {
         if (!args.country || !args.country.id || !args.condition) {
             console.error('invalid args', args);
             return false;
@@ -62,7 +62,7 @@ class HolidaysApp extends Homey.App {
         let hd;
         try {
             hd = holidays.isHoliday(args.country.id, new Date(), args.condition);
-            this.updateCountry(args.country.id);
+            await this.updateCountry(args.country.id);
         } catch (err) {
             console.error(err);
         }
@@ -71,7 +71,7 @@ class HolidaysApp extends Homey.App {
 
     async updateCountry(countryId) {
         Homey.ManagerSettings.set('country', countryId);
-        await this.onCronRun();
+        await this.onCronRun(countryId);
     }
 
     getCountry() {
@@ -100,8 +100,8 @@ class HolidaysApp extends Homey.App {
         }
     }
 
-    async onCronRun() {
-        let countryId = this.getCountry();
+    async onCronRun(pCountryId) {
+        let countryId = pCountryId || this.getCountry();
         if (!countryId) {
             this.log('Country is not set yet.. so skip');
             return;
