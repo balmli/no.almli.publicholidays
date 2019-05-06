@@ -3,22 +3,35 @@
 const Holidays = require('date-holidays');
 const countries = require('../lib/countries');
 
-function toJSONLocal (date) {
-    var local = new Date(date);
-    local.setMinutes(date.getMinutes() - date.getTimezoneOffset());
-    return local.toJSON().slice(0, 10);
-}
-
 console.log(`'use strict';`);
 console.log('const holidays_list = {');
 countries.map(c => {
     let hd = new Holidays(c.id);
-    for (let i = 0; i < 3 * 365; i++) {
-        var date = new Date(2019, 0, 1);
-        date.setDate(date.getDate() + i);
-        let ho = hd.isHoliday(date);
-        if (ho) {
-            console.log(`"${c.id}-${toJSONLocal(date)}":{"type":"${ho.type}","name":"${ho.name}"},`);
+    for (let year = 2019; year < 2022; year++) {
+        let dates = hd.getHolidays(year);
+        if (dates) {
+            const result = dates
+                .filter(date => date.type !== 'public')
+                .reduce(
+                    (accumulator, target) => ({...accumulator, [target.date.substr(0, 10)]: target}),
+                    {});
+
+            const publicHolidays = dates
+                .filter(date => date.type === 'public')
+                .reduce(
+                    (accumulator, target) => ({...accumulator, [target.date.substr(0, 10)]: target}),
+                    {});
+
+            Object.keys(publicHolidays).forEach(function (key) {
+                result[key] = publicHolidays[key];
+            });
+
+            Object.keys(result)
+                .sort()
+                .forEach(function (key) {
+                    let ho = result[key];
+                    console.log(`"${c.id}-${ho.date.substr(0, 10)}":{"type":"${ho.type}","name":"${ho.name}"},`);
+                });
         }
     }
 });

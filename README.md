@@ -71,6 +71,10 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 
 ### Release Notes:
 
+#### 1.0.10
+
+- Fixed timezone bug
+
 #### 1.0.9
 
 - Added tokens for holidays: HolidayYesterday, HolidayToday, HolidayTomorrow

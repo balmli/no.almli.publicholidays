@@ -67,7 +67,7 @@ describe("Norwegian holidays", function () {
             expect(holidays.isHoliday('NO', new Date(2019, 11, 26)).type).to.equal('public');
         });
         it("Check 31.12.2019", function () {
-            expect(holidays.isHoliday('NO', new Date(2019, 11, 31))).to.equal(false);
+            expect(holidays.isHoliday('NO', new Date(2019, 11, 31)).type).to.equal('bank');
         });
     });
 });
