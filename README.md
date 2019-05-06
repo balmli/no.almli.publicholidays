@@ -71,16 +71,10 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 
 ### Release Notes:
 
-#### 1.0.10
+#### 1.0.11
 
 - Fixed timezone bug
-
-#### 1.0.9
-
 - Added tokens for holidays: HolidayYesterday, HolidayToday, HolidayTomorrow
-
-#### 1.0.8
-
 - Added Bulgaria, Czech Republic, Hungary, Lichtenstein, Luxembourg, Romania, Slovakia, Slovenia
 
 #### 1.0.7
