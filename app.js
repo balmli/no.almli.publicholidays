@@ -22,13 +22,7 @@ class HolidaysApp extends Homey.App {
 
         new Homey.FlowCardCondition('is_workingday')
             .register()
-            .registerRunListener(args => {
-                let theDay = holidays.calcDate(new Date(), args.condition);
-                return theDay.getDay() >= 1 && theDay.getDay() <= 5 && !this.check(args, {
-                    'public': true,
-                    'bank': true
-                });
-            })
+            .registerRunListener(args => this.checkWorkingDay(args))
             .getArgument('country')
             .registerAutocompleteListener((query, args) => this.onCountryAutocomplete(query, args));
 
@@ -67,6 +61,15 @@ class HolidaysApp extends Homey.App {
             console.error(err);
         }
         return hd && hd.type && hd.type in types;
+    }
+
+    async checkWorkingDay(args) {
+        let theDay = holidays.calcDate(new Date(), args.condition);
+        let holi = await this.check(args, {
+            'public': true,
+            'bank': true
+        });
+        return theDay.getDay() >= 1 && theDay.getDay() <= 5 && !holi;
     }
 
     async updateCountry(countryId) {

@@ -71,6 +71,10 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 
 ### Release Notes:
 
+#### 1.0.12
+
+- Fixed working day bug, issue #4
+
 #### 1.0.11
 
 - Fixed timezone bug
