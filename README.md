@@ -71,7 +71,7 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 
 ### Release Notes:
 
-#### 1.0.13
+#### 1.0.14
 
 - Added German states
 
