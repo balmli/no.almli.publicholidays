@@ -1,6 +1,6 @@
 {
   "name": "no.almli.publicholidays",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Public holidays",
   "main": "app.js",
   "scripts": {

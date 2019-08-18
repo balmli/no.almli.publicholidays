@@ -30,5 +30,14 @@ describe("German holidays", function () {
         it("Check 26.12.2019", function () {
             expect(holidays.isHoliday('DE', new Date(2019, 11, 26)).type).to.equal('public');
         });
+        it("Check 18.04.2019", function () {
+            expect(holidays.isHoliday('DE-BW', new Date(2019, 3, 18)).type).to.equal('school');
+        });
+        it("Check 19.04.2019", function () {
+            expect(holidays.isHoliday('DE-BW', new Date(2019, 3, 19)).type).to.equal('public');
+        });
+        it("Check 20.04.2019", function () {
+            expect(holidays.isHoliday('DE-BW', new Date(2019, 3, 20)).type).to.undefined;
+        });
     });
 });

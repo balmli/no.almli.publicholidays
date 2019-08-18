@@ -18,6 +18,7 @@ class HolidaysApp extends Homey.App {
         this.addCondition('is_public_holiday', {'public': true});
         this.addCondition('is_bank_holiday', {'bank': true});
         this.addCondition('is_observance_holiday', {'observance': true});
+        this.addCondition('is_school_holiday', {'school': true});
         this.addCondition('is_holiday', {'public': true, 'bank': true});
 
         new Homey.FlowCardCondition('is_workingday')
