@@ -72,6 +72,10 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 
 ### Release Notes:
 
+#### 1.0.16
+
+- Updated holidays
+
 #### 1.0.15
 
 - Added support for school holidays
