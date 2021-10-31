@@ -72,6 +72,11 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 
 ### Release Notes:
 
+#### 1.1.0
+
+- Updated holidays
+- Updated to SDK3
+
 #### 1.0.16
 
 - Updated holidays
