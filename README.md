@@ -10,7 +10,6 @@ Observance holiday: optional festivity, no paid day off.
 - Is public holiday today / yesterday / tomorrow.
 - Is bank holiday today / yesterday / tomorrow.
 - Is observance holiday today / yesterday / tomorrow.
-- Is school holiday today / yesterday / tomorrow.
 - Is holiday (public or bank) today / yesterday / tomorrow.
 - Is working day today / yesterday / tomorrow.
 
@@ -71,6 +70,11 @@ Photo by Sai Kiran Anagani on Unsplash.
 Please report issues at the [issues section on Github](https://github.com/balmli/no.almli.publicholidays/issues).
 
 ### Release Notes:
+
+#### 1.2.0
+
+- Support for school holidays has been deprecated
+- Updated holidays
 
 #### 1.1.0
 

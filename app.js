@@ -60,6 +60,9 @@ class HolidaysApp extends Homey.App {
       this.log('invalid args', args);
       return false;
     }
+    if (args.condition === 'is_school_holiday') {
+      throw new Error('Support for school holidays has been deprecated');
+    }
     let hd;
     try {
       hd = holidays.isHoliday(args.country.id, this.getLocalDate(), args.condition);
