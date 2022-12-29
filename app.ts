@@ -1,10 +1,14 @@
-'use strict';
+import Homey, {FlowToken} from 'homey';
 
-const Homey = require('homey');
-const holidays = require('./lib/holidays');
-const countries = require('./lib/countries');
+import {countries, HolidayTypes, holidays, Holiday} from '@balmli/homey-public-holidays'
 
 class HolidaysApp extends Homey.App {
+
+  _deleted: Boolean = false;
+  tokenYesterday?: FlowToken;
+  tokenToday?: FlowToken;
+  tokenTomorrow?: FlowToken;
+  curTimeout: any;
 
   async onInit() {
 
@@ -21,15 +25,18 @@ class HolidaysApp extends Homey.App {
 
     this.tokenYesterday = await this.homey.flow.createToken('HolidayYesterday', {
       type: 'string',
-      title: 'Holiday yesterday'
+      title: 'Holiday yesterday',
+      value: ''
     });
     this.tokenToday = await this.homey.flow.createToken('HolidayToday', {
       type: 'string',
-      title: 'Holiday today'
+      title: 'Holiday today',
+      value: ''
     });
     this.tokenTomorrow = await this.homey.flow.createToken('HolidayTomorrow', {
       type: 'string',
-      title: 'Holiday tomorrow'
+      title: 'Holiday tomorrow',
+      value: ''
     });
 
     await this.scheduleJob(5);
@@ -42,20 +49,20 @@ class HolidaysApp extends Homey.App {
     this.clearJob();
   }
 
-  addCondition(condition, types) {
+  addCondition(condition: string, types: HolidayTypes) {
     this.homey.flow.getConditionCard(condition)
       .registerRunListener(args => this.check(args, types))
       .getArgument('country')
-      .registerAutocompleteListener((query, args) => this.onCountryAutocomplete(query, args));
+      .registerAutocompleteListener((query: string, args: any) => this.onCountryAutocomplete(query, args));
   }
 
-  onCountryAutocomplete(query, args) {
+  onCountryAutocomplete(query: string, args: any) {
     return Promise.resolve(countries.filter(result => {
       return result.name.toLowerCase().indexOf(query.toLowerCase()) > -1;
     }));
   }
 
-  async check(args, types) {
+  async check(args: any, types: HolidayTypes) {
     if (!args.country || !args.country.id || !args.condition) {
       this.log('invalid args', args);
       return false;
@@ -70,10 +77,14 @@ class HolidaysApp extends Homey.App {
     } catch (err) {
       this.log(err);
     }
-    return hd && hd.type && hd.type in types;
+    if (hd === false) {
+      return false;
+    }
+    const hdd = hd as Holiday;
+    return hdd.type in types;
   }
 
-  async checkWorkingDay(args) {
+  async checkWorkingDay(args: any) {
     let theDay = holidays.calcDate(this.getLocalDate(), args.condition);
     let holi = await this.check(args, {
       'public': true,
@@ -82,7 +93,7 @@ class HolidaysApp extends Homey.App {
     return theDay.getDay() >= 1 && theDay.getDay() <= 5 && !holi;
   }
 
-  async updateCountry(countryId) {
+  async updateCountry(countryId: string) {
     this.homey.settings.set('country', countryId);
     await this.onJob(countryId);
   }
@@ -106,7 +117,7 @@ class HolidaysApp extends Homey.App {
     this.curTimeout = this.homey.setTimeout(this.onJob.bind(this), interval * 1000);
   }
 
-  async onJob(pCountryId) {
+  async onJob(pCountryId: string) {
     if (this._deleted) {
       return;
     }
@@ -128,9 +139,16 @@ class HolidaysApp extends Homey.App {
     }
   }
 
-  async updateToken(countryId, date, condition, token) {
-    let hd = holidays.isHoliday(countryId, date, condition);
-    await token.setValue(hd ? hd.name : '');
+  async updateToken(countryId: string, date: Date, condition: string, token?: FlowToken) {
+    if (!!token) {
+      let hd = holidays.isHoliday(countryId, date, condition);
+      if (hd === false) {
+        token.setValue('');
+      } else {
+        const hdd = hd as Holiday;
+        await token.setValue(hdd.name);
+      }
+    }
   }
 
   getLocalDate() {

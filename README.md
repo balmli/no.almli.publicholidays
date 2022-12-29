@@ -71,6 +71,10 @@ Please report issues at the [issues section on Github](https://github.com/balmli
 
 ### Release Notes:
 
+#### 1.3.0
+
+- Updated holidays
+
 #### 1.2.1
 
 - Fix description for 'Is public holiday' condition
