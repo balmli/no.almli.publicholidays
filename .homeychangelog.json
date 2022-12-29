@@ -1,4 +1,7 @@
 {
+  "1.2.1": {
+    "en": "Fix description for 'Is public holiday' condition. "
+  },
   "1.2.0": {
     "en": "Support for school holidays has been deprecated. Updated holidays. "
   },

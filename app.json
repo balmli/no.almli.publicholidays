@@ -1,6 +1,6 @@
 {
   "id": "no.almli.publicholidays",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#3fde58",
@@ -49,7 +49,7 @@
           "en": "Is !{{public|not public}} holiday"
         },
         "titleFormatted": {
-          "en": "Is !{{working day|not working day}} [[condition]] in [[country]]"
+          "en": "Is !{{public|not public}} holiday [[condition]] in [[country]]"
         },
         "args": [
           {
