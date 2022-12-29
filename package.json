@@ -2,18 +2,19 @@
   "name": "no.almli.publicholidays",
   "version": "1.1.0",
   "description": "Public holidays",
-  "main": "app.js",
+  "main": "app.ts",
   "scripts": {
-    "pretest": "eslint --ignore-path .gitignore app.js lib test",
-    "test": "./node_modules/.bin/mocha --reporter spec",
-    "posttest": "athom app validate --level=publish"
+    "build": "tsc"
   },
   "author": "Bjørnar Almli",
   "license": "ISC",
+  "dependencies": {
+    "@balmli/homey-public-holidays": "^1.0.3"
+  },
   "devDependencies": {
-    "eslint": "^5.12.1",
-    "chai": "^4.2.0",
-    "chai-datetime": "^1.5.0",
-    "mocha": "^5.2.0"
+    "@types/homey": "npm:homey-apps-sdk-v3-types@^0.3.3",
+    "@types/node": "^16.11.12",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.4"
   }
 }
