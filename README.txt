@@ -43,7 +43,7 @@ The following countries are supported:
 - Sweden
 - Switzerland
 - United Kingdom
-
+- USA
 
 Tokens:
 

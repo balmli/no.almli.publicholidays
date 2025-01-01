@@ -48,6 +48,7 @@ The following countries are supported:
 - Sweden
 - Switzerland
 - United Kingdom
+- USA
 
 #### Tokens
 
@@ -70,6 +71,11 @@ Photo by Sai Kiran Anagani on Unsplash.
 Please report issues at the [issues section on Github](https://github.com/balmli/no.almli.publicholidays/issues).
 
 ### Release Notes:
+
+#### 1.4.0
+
+- Updated holidays
+- Added USA
 
 #### 1.3.0
 
