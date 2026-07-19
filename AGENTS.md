@@ -32,6 +32,8 @@ There is currently no automated test suite. For changes to Homey metadata or Flo
 
 GitHub Actions runs the TypeScript build and Homey `publish`-level validation for pushes to `main` and pull requests. Versioning and publishing are separate manual workflows. Publishing requires the `HOMEY_PAT` secret and must only be triggered when explicitly requested.
 
+The app installs `@balmli` dependencies from GitHub Packages. Workflows authenticate with their short-lived `GITHUB_TOKEN`; each private package must grant this repository read access under **Manage Actions access**. If that is not possible, configure a `GH_PACKAGES_TOKEN` repository secret containing a classic GitHub PAT with `read:packages`; the workflows automatically prefer that secret when present. Never commit a package token to `.npmrc`.
+
 ## Homey Apps SDK MCP
 
 The `homey-apps-sdk` MCP server is configured for this development environment at `https://apps.developer.homey.app/~gitbook/mcp`. Use it as the primary source for current Homey Apps SDK documentation, APIs, manifest schemas, Flow-card behavior, and platform conventions instead of relying on memory. If its tools are unavailable in the current session, restart Codex or open a new task so the MCP configuration is reloaded. Clearly report when the MCP could not be consulted.
