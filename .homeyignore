@@ -1,4 +1,11 @@
 .git
 .gitignore
+.github/*
+AGENTS.md
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+README.md
+README.txt
+build/*
 test/*
 scripts/*

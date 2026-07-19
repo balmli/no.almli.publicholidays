@@ -12,11 +12,12 @@ This repository contains a Homey SDK v3 app that exposes public-holiday checks a
 - `assets/` — source app icon and store images.
 - `README.md` and `.homeychangelog.json` — user-facing documentation and release notes.
 - `.github/workflows/` — CI validation plus manually triggered versioning and App Store publishing.
+- `.homeyignore` — files and directories excluded from the packaged Homey app.
 - `.homeybuild/` — generated Homey build output; do not edit it directly.
 
 ## Setup and validation
 
-Use the Node.js version in `.nvmrc` (currently Node 18) and install locked dependencies with:
+Use the Node.js version in `.nvmrc` (currently Node 24.16.0) and install locked dependencies with:
 
 ```sh
 npm ci
@@ -37,6 +38,15 @@ The app installs `@balmli` dependencies from GitHub Packages. Workflows authenti
 ## Homey Apps SDK MCP
 
 The `homey-apps-sdk` MCP server is configured for this development environment at `https://apps.developer.homey.app/~gitbook/mcp`. Use it as the primary source for current Homey Apps SDK documentation, APIs, manifest schemas, Flow-card behavior, and platform conventions instead of relying on memory. If its tools are unavailable in the current session, restart Codex or open a new task so the MCP configuration is reloaded. Clearly report when the MCP could not be consulted.
+
+## Homey package contents
+
+`.homeyignore` controls which repository files are excluded when Homey creates `.homeybuild` and the distributable app package. Keep the package small and runtime-focused:
+
+- Whenever adding a development-only file, directory, generated output, local reference, or symlink, add an appropriate entry to `.homeyignore` in the same change.
+- In particular, keep tests, scripts, CI configuration, agent instructions, local linked repositories such as `no.yr`, legacy `build/` output, and contributor documentation out of the package.
+- Do not exclude runtime files required by the app, including `app.json`, `package.json`, compiled application code, production dependencies, `assets/`, or `locales/`.
+- After changing `.homeyignore` or adding a top-level path, run Homey validation to regenerate `.homeybuild`, inspect its contents, and check its total size. Do not assume `.gitignore` also excludes files from the Homey package.
 
 ## Change guidelines
 
