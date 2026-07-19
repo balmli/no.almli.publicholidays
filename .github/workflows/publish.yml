@@ -1,7 +1,11 @@
 name: Publish Homey app
 
 on:
-  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+  schedule:
+    - cron: '17 4 2 1 *'
 
 permissions:
   contents: read
@@ -12,9 +16,9 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  publish:
-    name: Validate and publish
-    if: github.ref == 'refs/heads/main'
+  publish-tag:
+    name: Build, validate, and publish tag
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     environment: homey-app-store
@@ -23,10 +27,31 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
       - name: Configure GitHub Packages authentication
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN || github.token }}
         run: npm config set '//npm.pkg.github.com/:_authToken' '${NODE_AUTH_TOKEN}' --location=project
+
+      - name: Verify tag matches app version
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          app_version=$(node -p "require('./app.json').version")
+          test "$TAG" = "v$app_version"
+
+      - name: Install dependencies
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN || github.token }}
+        run: npm ci --ignore-scripts
+
+      - name: Build
+        run: npm run build
 
       - name: Validate release
         uses: athombv/github-action-homey-app-validate@002b7273c2b86032cb20d9bf25a67c8daca13f2c # v1
@@ -47,3 +72,101 @@ jobs:
         env:
           HOMEY_RELEASE_URL: ${{ steps.publish.outputs.url }}
         run: echo "Manage the Homey release at ${HOMEY_RELEASE_URL}." >> "$GITHUB_STEP_SUMMARY"
+
+  annual-update:
+    name: Update holidays and publish annual release
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: homey-app-store
+    permissions:
+      contents: write
+      packages: read
+
+    steps:
+      - name: Check out main
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Configure GitHub Packages authentication
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN || github.token }}
+        run: npm config set '//npm.pkg.github.com/:_authToken' '${NODE_AUTH_TOKEN}' --location=project
+
+      - name: Install latest holiday data
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN || github.token }}
+        run: npm install --save-exact @balmli/homey-public-holidays@latest --ignore-scripts
+
+      - name: Get release year
+        id: release-date
+        run: echo "year=$(date -u +%Y)" >> "$GITHUB_OUTPUT"
+
+      - name: Bump Homey app patch version
+        id: version
+        env:
+          RELEASE_YEAR: ${{ steps.release-date.outputs.year }}
+        run: |
+          node -e '
+            const fs = require("fs");
+            const app = require("./app.json");
+            const changelog = require("./.homeychangelog.json");
+            const parts = app.version.split(".").map(Number);
+            parts[2] += 1;
+            app.version = parts.join(".");
+            const updatedChangelog = {
+              [app.version]: { en: "Updated public holiday data for " + process.env.RELEASE_YEAR + "." },
+              ...changelog,
+            };
+            fs.writeFileSync("app.json", JSON.stringify(app, null, 2) + "\n");
+            fs.writeFileSync(".homeychangelog.json", JSON.stringify(updatedChangelog, null, 2) + "\n");
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, "version=" + app.version + "\n");
+          '
+
+      - name: Install locked dependencies
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN || github.token }}
+        run: npm ci --ignore-scripts
+
+      - name: Build
+        run: npm run build
+
+      - name: Validate release
+        uses: athombv/github-action-homey-app-validate@002b7273c2b86032cb20d9bf25a67c8daca13f2c # v1
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN || github.token }}
+        with:
+          level: publish
+
+      - name: Commit and tag annual release
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app.json package.json package-lock.json .homeychangelog.json
+          git commit -m "Update public holidays for ${{ steps.release-date.outputs.year }}"
+          git tag "v${VERSION}"
+          git push origin HEAD:main "refs/tags/v${VERSION}"
+
+      - name: Publish to Homey App Store
+        id: publish
+        uses: athombv/github-action-homey-app-publish@48be66b7f2f870c22b6117d7bb84dfa06c4fc309 # v1
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN || github.token }}
+        with:
+          personal_access_token: ${{ secrets.HOMEY_PAT }}
+
+      - name: Add publication summary
+        env:
+          HOMEY_RELEASE_URL: ${{ steps.publish.outputs.url }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: echo "Published annual release v${VERSION}. Manage it at ${HOMEY_RELEASE_URL}." >> "$GITHUB_STEP_SUMMARY"

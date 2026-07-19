@@ -42,7 +42,7 @@ jobs:
         run: npm ci --ignore-scripts
 
       - name: Build
-        run: ./node_modules/.bin/tsc
+        run: npm run build
 
       - name: Validate for publishing
         uses: athombv/github-action-homey-app-validate@002b7273c2b86032cb20d9bf25a67c8daca13f2c # v1

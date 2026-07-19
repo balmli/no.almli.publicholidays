@@ -1,6 +1,6 @@
 {
   "name": "no.almli.publicholidays",
-  "version": "1.4.0",
+  "version": "1.0.0",
   "description": "Public holidays",
   "main": "app.ts",
   "engines": {
@@ -12,7 +12,7 @@
   "author": "Bjørnar Almli",
   "license": "ISC",
   "dependencies": {
-    "@balmli/homey-public-holidays": "1.1.0"
+    "@balmli/homey-public-holidays": "1.2.1"
   },
   "devDependencies": {
     "@tsconfig/node24": "^24.0.4",
